@@ -1,0 +1,43 @@
+# %Tag(FULLTEXT)%
+cmake_minimum_required(VERSION 2.8.3)
+project(power_state)
+
+## Find catkin and any catkin packages
+find_package(catkin REQUIRED COMPONENTS roscpp rospy std_msgs genmsg geometry_msgs)
+
+## Declare ROS messages and services
+add_message_files(FILES Num.msg)
+add_service_files(FILES AddTwoInts.srv)
+add_service_files(FILES IsPowered.srv)
+add_service_files(FILES SetPower.srv)
+
+## Generate added messages and services
+generate_messages(DEPENDENCIES std_msgs)
+
+## Declare a catkin package
+catkin_package()
+
+include_directories(
+  ${catkin_INCLUDE_DIRS}
+)
+
+## Build service client and server
+# %Tag(SRVCLIENT)%
+# add_executable(add_two_ints_server src/add_two_ints_server.cpp)
+# target_link_libraries(add_two_ints_server ${catkin_LIBRARIES})
+# add_dependencies(add_two_ints_server power_state_gencpp)
+
+# add_executable(add_two_ints_client src/add_two_ints_client.cpp)
+# target_link_libraries(add_two_ints_client ${catkin_LIBRARIES})
+# add_dependencies(add_two_ints_client power_state_gencpp)
+
+# %EndTag(SRVCLIENT)%
+
+# %EndTag(FULLTEXT)%
+add_executable(is_powered src/is_powered.cpp)
+target_link_libraries(is_powered ${catkin_LIBRARIES})
+add_dependencies(is_powered power_state_gencpp)
+
+add_executable(set_power src/set_power)
+target_link_libraries(set_power ${catkin_LIBRARIES})
+add_dependencies(set_power power_state_gencpp)
